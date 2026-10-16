@@ -1461,7 +1461,8 @@ def save_docs_to_vector_db(
             raise ValueError(ERROR_MESSAGES.DEFAULT('Invalid text splitter'))
 
     if len(docs) == 0:
-        raise ValueError(ERROR_MESSAGES.EMPTY_CONTENT)
+        log.warning("No text extracted from document, skipping vector DB embedding")
+        return True
 
     texts = [sanitize_text_for_db(doc.page_content) for doc in docs]
     metadatas = [
